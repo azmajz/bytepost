@@ -1,6 +1,7 @@
 import { supabase } from './supabase'
+import { cache } from 'react'
 
-export async function getPublishedPosts() {
+export const getPublishedPosts = async () => {
   try {
     // Fetch posts with authors and topics in a single query
     const { data: posts, error: postsError } = await supabase
@@ -23,7 +24,6 @@ export async function getPublishedPosts() {
       .order('created_at', { ascending: false })
 
     if (postsError) {
-      console.error('Error fetching posts:', postsError)
       return []
     }
 
@@ -34,9 +34,8 @@ export async function getPublishedPosts() {
   }
 }
 
-export async function getPostBySlug(slug) {
+export const getPostBySlug = cache(async(slug) => {
   try {
-
     // Fetch post with author and topic in a single query
     const { data: post, error: postError } = await supabase
       .from('posts')
@@ -63,7 +62,6 @@ export async function getPostBySlug(slug) {
       .single()
 
     if (postError) {
-      console.error('Error fetching post:', postError)
       return null
     }
 
@@ -72,4 +70,28 @@ export async function getPostBySlug(slug) {
     console.error('Error in getPostBySlug:', error)
     return null
   }
-} 
+})
+
+export const getPostMetadata = async(slug) => {
+    try {
+  
+      const { data: post, error: postError } = await supabase
+        .from('posts')
+        .select(`
+          title,
+          excerpt,
+          cover_image_url
+        `)
+        .eq('slug', slug)
+        .single();
+
+      if (postError) {
+        return null
+      }
+  
+      return post
+    } catch (error) {
+      console.error('Error in getPostBySlug:', error)
+      return null
+    }
+  } 

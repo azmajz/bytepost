@@ -7,6 +7,7 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
 import './BlogDetail.css';
 
+
 export default function BlogDetail({ post }) {
   const [quillContent, setQuillContent] = useState(post.content);
   // Memoize the transformation function
