@@ -9,6 +9,7 @@ import {
 } from 'react-icons/io5';
 import { useTheme } from '../../context/ThemeContext';
 import './Header.css';
+import NextLink from 'next/link';
 
 export default function Header() {
   const [isMobileNavActive, setIsMobileNavActive] = useState(false);
@@ -22,10 +23,10 @@ export default function Header() {
     <header>
       <div className="container">
         <nav className="navbar">
-          <a href="#">
+          <NextLink href="/">
             <img src="/logo-light.png" alt="BytePost's logo" width="170" height="40" className="logo-light" />
             <img src="/logo-dark.png" alt="BytePost's logo" width="170" height="40" className="logo-dark" />
-          </a>
+          </NextLink>
 
           <div className="btn-group">
             <button 

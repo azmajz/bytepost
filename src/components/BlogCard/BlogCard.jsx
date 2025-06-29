@@ -1,4 +1,5 @@
 import { IoTimeOutline } from 'react-icons/io5';
+import Link from 'next/link';
 import './BlogCard.css';
 
 export default function BlogCard({ post }) {
@@ -13,13 +14,13 @@ export default function BlogCard({ post }) {
         />
       </div>
 
-      <div className="blog-content-wrapper">
+      <div className="blog-card-wrapper">
         <button className="blog-topic text-tiny">{post.topic}</button>
 
         <h3>
-          <a href="#" className="h3">
+          <Link href={`/post/${post.slug}`} className="h3">
             {post.title}
-          </a>
+          </Link>
         </h3>
 
         <p className="blog-text">
