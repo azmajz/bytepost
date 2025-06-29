@@ -29,14 +29,14 @@ export default function BlogCard({ post }) {
 
         <div className="wrapper-flex">
           <div className="profile-wrapper">
-            <img src="/author.png" alt="Julia Walker" width="50" />
+            <img src={post.author.avatar} alt={post.author.name} width="50" />
           </div>
 
           <div className="wrapper">
-            <a href="#" className="h4">Julia Walker</a>
+            <a href="#" className="h4">{post.author.name}</a>
 
             <p className="text-sm">
-              <time dateTime="2022-01-17">{post.date}</time>
+              <time dateTime={post.date}>{post.date}</time>
               <span className="separator"></span>
               <IoTimeOutline />
               <time dateTime="PT3M">{post.readTime}</time>

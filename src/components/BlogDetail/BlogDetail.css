@@ -9,36 +9,6 @@
 }
 
 /*-----------------------------------*\ 
-  #FLOATING TOC BUTTON
-\*-----------------------------------*/
-
-.floating-toc-btn {
-  position: fixed;
-  top: 100px;
-  right: 2rem;
-  width: 50px;
-  height: 50px;
-  background: var(--background-primary);
-  border: 1px solid var(--action-primary);
-  border-radius: 50%;
-  color: var(--foreground-primary);
-  font-size: 1.5rem;
-  cursor: pointer;
-  z-index: 100;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.floating-toc-btn:hover {
-  background: var(--action-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-/*-----------------------------------*\ 
   #HERO SECTION
 \*-----------------------------------*/
 
@@ -65,7 +35,6 @@
   /* max-width: 800px; */
   height: auto;
   border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Hero Content */
@@ -95,10 +64,11 @@
 .hero-stats {
   display: flex;
   gap: 1.5rem;
+  color: var(--foreground-secondary);
+  font-weight: 300;
+  font-size: .9rem;
 }
 .stats-group {
-  font-size: .9rem;
-  color: var(--foreground-secondary);
   display: flex;
   align-items: center;
   gap: .5rem;
@@ -111,12 +81,10 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--foreground-secondary);
-  font-size: 0.9rem;
 }
 
 .stat svg {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 .hero-title {
@@ -159,7 +127,6 @@
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--action-primary);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .author-details {
@@ -183,31 +150,6 @@
   opacity: 0.8;
 }
 
-.follow-btn {
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 24px;
-  padding: 0.6rem 1.8rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-left: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  letter-spacing: 0.3px;
-}
-
-.follow-btn:hover {
-  background: var(--foreground-secondary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.follow-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
 
 .author-actions {
   display: flex;
@@ -660,21 +602,6 @@
 /*-----------------------------------*\ 
   #DARK THEME
 \*-----------------------------------*/
-
-.dark-theme .floating-toc-btn {
-  background: var(--background-primary);
-  border-color: var(--action-primary);
-  color: var(--foreground-primary);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.dark-theme .floating-toc-btn:hover {
-  background: var(--action-primary);
-}
-
-.dark-theme .hero-image {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
 
 .dark-theme .tag {
   background: var(--action-primary);

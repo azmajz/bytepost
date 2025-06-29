@@ -1,12 +1,10 @@
-'use client';
-
 import Hero from '../components/Hero/Hero';
 import BlogList from '../components/BlogList/BlogList';
 import Sidebar from '../components/Sidebar/Sidebar';
-import { getAllBlogPosts } from '../data/blogPosts';
+import { getPublishedPosts } from '../lib/posts';
 
-export default function Home() {
-  const blogPosts = getAllBlogPosts();
+export default async function Home() {
+  const blogPosts = await getPublishedPosts();
 
   return (
     <>
