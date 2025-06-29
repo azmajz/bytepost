@@ -1,11 +1,13 @@
 import './globals.css'
 import { ThemeProvider } from '../context/ThemeContext';
+import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
+
 const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 export const metadata = {
   title: "BytePost - Powerful Tech Posts, Streamlined",
   description: "Discover BytePost, your go-to source for concise, insightful tech articles, tutorials, and developer posts. Stay ahead with quick, practical content crafted for coders and tech enthusiasts.",
   keywords: "BytePost, tech blog, programming articles, developer tutorials, coding tips, tech news, software development, web development, programming tutorials",
-  authors: [{ name: "BytePost" }],
   robots: "index, follow",
   alternates: {
     canonical: appUrl,
@@ -31,7 +33,7 @@ export const metadata = {
   },
   icons: {
     icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    apple: "/favicon.png",
   },
   other: {
     "X-UA-Compatible": "IE=edge",
@@ -81,7 +83,11 @@ export default function RootLayout({ children }) {
       </head>
       <body className="light-theme">
         <ThemeProvider>
-          {children}
+          <Header />
+          <main>  
+            {children}
+          </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

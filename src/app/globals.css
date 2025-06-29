@@ -17,13 +17,13 @@
    * light theme colors 
    */
   --background-primary: hsl(0, 0%, 100%);
-  --background-secondary: hsl(0, 0%, 97%);
+  --background-secondary: rgb(247, 247, 247);
   --action-primary: hsl(214, 32%, 91%);
   --action-secondary: hsl(210, 38%, 95%);
   --foreground-primary: hsl(218, 23%, 23%);
   --foreground-secondary: hsl(216, 15%, 52%);
   --foreground-tertiary: hsl(214, 20%, 69%);
-  --accent: hsl(229, 76%, 66%);
+  --accent: #3d71a0;
 }
 
 .dark-theme {
@@ -37,7 +37,7 @@
   --foreground-primary: hsl(210, 38%, 95%);
   --foreground-secondary: hsl(211, 25%, 84%);
   --foreground-tertiary: hsl(214, 20%, 69%);
-  --accent: hsl(229, 76%, 66%);
+  --accent: #3d71a0;
 }
 
 :root {
@@ -45,6 +45,7 @@
    * color
    */
   --white: hsl(0, 0%, 100%);
+  --light-gray: #f7f7f7;
   --navy-blue: #326896;
   --light-blue: #4a9ee3;
 

@@ -6,12 +6,12 @@ export default function Footer() {
       <div className="container">
         <div className="wrapper">
           <a href="#" className="footer-logo">
-            <img src="/logo-light.svg" alt="BytePost's Logo" width="150" height="40" className="logo-light" />
-            <img src="/logo-dark.svg" alt="BytePost's Logo" width="150" height="40" className="logo-dark" />
+            <img src="/logo-light.png" alt="BytePost's Logo" width="180" height="40" className="logo-light" />
+            <img src="/logo-dark.png" alt="BytePost's Logo" width="180" height="40" className="logo-dark" />
           </a>
 
           <p className="footer-text">
-            Learn about Web accessibility, Web performance, and Database management.
+            Discover BytePost — your source for concise, insightful tech articles and tutorials, crafted for developers and tech enthusiasts.
           </p>
         </div>
 

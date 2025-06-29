@@ -1,10 +1,10 @@
 import BlogCard from '../BlogCard/BlogCard';
-import './BlogSection.css';
+import './BlogList.css';
 
-export default function BlogSection({ blogPosts }) {
+export default function BlogList({ blogPosts }) {
   return (
     <div className="blog">
-      <h2 className="h2">Latest Blog Post</h2>
+      <h2 className="h2">Latest Posts</h2>
 
       <div className="blog-card-group">
         {blogPosts.map((post) => (

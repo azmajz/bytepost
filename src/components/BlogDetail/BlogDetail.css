@@ -124,7 +124,7 @@
   font-weight: 900;
   line-height: 1.1;
   color: var(--foreground-primary);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .hero-subtitle {
@@ -327,7 +327,7 @@
 .article-body pre code {
   background: none;
   padding: 0;
-  color: var(--background-primary);
+  color: var(--light-gray);
   font-size: 0.95rem;
   line-height: 1.6;
 }

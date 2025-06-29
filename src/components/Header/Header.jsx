@@ -24,8 +24,8 @@ export default function Header() {
       <div className="container">
         <nav className="navbar">
           <NextLink href="/">
-            <img src="/logo-light.png" alt="BytePost's logo" width="170" height="40" className="logo-light" />
-            <img src="/logo-dark.png" alt="BytePost's logo" width="170" height="40" className="logo-dark" />
+            <img src="/logo-light.png" alt="BytePost's logo" width="180" height="40" className="logo-light" />
+            <img src="/logo-dark.png" alt="BytePost's logo" width="180" height="40" className="logo-dark" />
           </NextLink>
 
           <div className="btn-group">
