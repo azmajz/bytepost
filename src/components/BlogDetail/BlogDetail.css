@@ -62,7 +62,7 @@
 
 .hero-image {
   width: 100%;
-  max-width: 800px;
+  /* max-width: 800px; */
   height: auto;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -81,7 +81,8 @@
 }
 
 .topic-badge {
-  background: var(--accent);
+  background: var(--navy-blue);
+  cursor: pointer;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 20px;
@@ -95,7 +96,17 @@
   display: flex;
   gap: 1.5rem;
 }
-
+.stats-group {
+  font-size: .9rem;
+  color: var(--foreground-secondary);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.stats-group .dot {
+	font-size: 1.2rem;
+	line-height: 0;
+}
 .stat {
   display: flex;
   align-items: center;
@@ -128,7 +139,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2.5rem 0;
+  padding: 1.5rem 0;
   border-top: 1px solid var(--action-primary);
   border-bottom: 1px solid var(--action-primary);
   margin: 3rem 0 2.5rem;

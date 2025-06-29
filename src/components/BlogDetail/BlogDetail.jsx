@@ -77,16 +77,24 @@ export default function BlogDetail({ post }) {
             {/* Hero Content */}
             <div className="hero-content">              
               <h1 className="hero-title">{post.title}</h1>
-              <p className="hero-subtitle">{post.excerpt}</p>
+              {/* <p className="hero-subtitle">{post.excerpt}</p> */}
 
 
               <div className="hero-meta">
                 <span className="topic-badge">{post.topic}</span>
                 <div className="hero-stats">
-                  <span className="stat">
-                    <IoTimeOutline />
-                    {post.readTime}
-                  </span>
+
+                  <div className="stats-group">
+                    <span className="stat">
+                      <IoTimeOutline />
+                      {post.readTime}
+                    </span>
+                    <span className="dot">·</span>
+                    <span className="stat">
+                      {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </span>
+                  </div>
+          
                   <span className="stat">
                     <IoAnalyticsOutline />
                     {post.views.toLocaleString()} views
@@ -94,11 +102,12 @@ export default function BlogDetail({ post }) {
                 </div>
               </div>
               
-              <div className="author-section">
+              {/* <div className="author-section">
                 <div className="author-info">
                   <img src={post.author.avatar} alt={post.author.name} className="author-avatar" />
                   <div className="author-details">
                     <h3 className="author-name">{post.author.name}</h3>
+                    <span>Author</span>
                     <p className="post-date">{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
                   </div>
                   <button className="follow-btn">Follow</button>
@@ -108,7 +117,7 @@ export default function BlogDetail({ post }) {
                   <button className="icon-btn" title="Bookmark"><IoBookmarkOutline /></button>
                   <button className="icon-btn" title="Share" onClick={() => handleShare('copy')}><IoShareOutline /></button>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Hero Image */}

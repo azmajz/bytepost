@@ -45,6 +45,8 @@
    * color
    */
   --white: hsl(0, 0%, 100%);
+  --navy-blue: #326896;
+  --light-blue: #4a9ee3;
 
   /**
    * typography 
