@@ -1,5 +1,5 @@
-import BlogDetail from '../../../components/BlogDetail/BlogDetail';
-import { getPostBySlug, getPostMetadata } from '../../../lib/posts';
+import BlogDetail from '@/components/BlogDetail/BlogDetail';
+import { getPostBySlug, getPostMetadata } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }) {
