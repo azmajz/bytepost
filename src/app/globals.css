@@ -69,26 +69,30 @@
   #RESET
 \*-----------------------------------*/
 
-*, *::before, *::after {
-  margin:  0;
+*,
+*::before,
+*::after {
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-a { 
-  text-decoration: none; 
+a {
+  text-decoration: none;
 }
 
-li { 
-  list-style: none; 
+li {
+  list-style: none;
 }
 
-img, button { 
-  display: block; 
+img,
+button {
+  display: block;
 }
 
-a, span { 
-  display: inline-block; 
+a,
+span {
+  display: inline-block;
 }
 
 button {
@@ -100,20 +104,36 @@ button {
 
 html {
   font-family: "Inter", sans-serif;
-  font-size: var(--fs-base); /* base font-size (0.85rem = 13.6px) */
+  font-size: var(--fs-base);
+  /* base font-size (0.85rem = 13.6px) */
   line-height: 1.8;
 }
 
-:focus { 
-  outline-offset: 4px; 
+:focus {
+  outline-offset: 4px;
+}
+
+.layout-main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-main {
+  flex: 1 0 auto;
+  /* Optionally, add: */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* vertically center loader/content if desired */
 }
 
 /*-----------------------------------*\ 
   #SCROLLBAR STYLE
 \*-----------------------------------*/
 
-::-webkit-scrollbar { 
-  width: 16px; 
+::-webkit-scrollbar {
+  width: 16px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -122,20 +142,20 @@ html {
   border: 4px solid;
 }
 
-.light-theme::-webkit-scrollbar-thumb { 
-  border-color: hsl(0, 0%, 90%); 
+.light-theme::-webkit-scrollbar-thumb {
+  border-color: hsl(0, 0%, 90%);
 }
 
-.dark-theme::-webkit-scrollbar-thumb { 
-  border-color: hsl(219, 27%, 20%); 
+.dark-theme::-webkit-scrollbar-thumb {
+  border-color: hsl(219, 27%, 20%);
 }
 
-.light-theme::-webkit-scrollbar-track { 
-  background: hsl(0, 0%, 90%); 
+.light-theme::-webkit-scrollbar-track {
+  background: hsl(0, 0%, 90%);
 }
 
-.dark-theme::-webkit-scrollbar-track { 
-  background: hsl(219, 27%, 20%); 
+.dark-theme::-webkit-scrollbar-track {
+  background: hsl(219, 27%, 20%);
 }
 
 /*-----------------------------------*\ 
@@ -198,12 +218,12 @@ html {
   font-weight: 700;
 }
 
-.text-sm { 
-  font-size: var(--fs-4); 
+.text-sm {
+  font-size: var(--fs-4);
 }
 
-.text-tiny { 
-  font-size: var(--fs-5); 
+.text-tiny {
+  font-size: var(--fs-5);
 }
 
 /*-----------------------------------*\ 
@@ -212,7 +232,8 @@ html {
 
 .container {
   margin-inline: auto;
-  margin: auto; /* fallback for margin-inline */
+  margin: auto;
+  /* fallback for margin-inline */
   padding: 0 15px;
 }
 
@@ -239,8 +260,8 @@ html {
   border: 3px solid var(--foreground-tertiary);
 }
 
-.btn-secondary:hover { 
-  border-color: var(--accent); 
+.btn-secondary:hover {
+  border-color: var(--accent);
 }
 
 /*-----------------------------------*\ 
@@ -257,20 +278,20 @@ html {
 \*-----------------------------------*/
 
 @media (min-width: 650px) {
-  .container { 
-    padding: 0 30px; 
+  .container {
+    padding: 0 30px;
   }
 }
 
 @media (min-width: 768px) {
-  .container { 
-    max-width: 800px; 
+  .container {
+    max-width: 800px;
   }
 }
 
 @media (min-width: 1024px) {
-  .container { 
-    max-width: 1150px; 
+  .container {
+    max-width: 1150px;
   }
 
   .main .container {
@@ -284,6 +305,6 @@ html {
   #DARK THEME FOR SHARED STYLES
 \*-----------------------------------*/
 
-.dark-theme .btn-primary:hover { 
-  color: var(--background-primary); 
-} 
+.dark-theme .btn-primary:hover {
+  color: var(--background-primary);
+}

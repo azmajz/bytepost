@@ -85,7 +85,7 @@ export default function RootLayout({ children }) {
       <body className="light-theme">
         <ThemeProvider>
           <Header />
-          <main>  
+          <main className='layout-main'>  
             {children}
           </main>
           <Footer />
