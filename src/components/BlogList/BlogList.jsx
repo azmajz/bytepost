@@ -9,11 +9,11 @@ export default function BlogList({ blogPosts }) {
     title: post.title,
     excerpt: post.excerpt,
     content: post.content,
-    image: post.cover_image_url || '/placeholder.png',
+    image: post.cover_image_url,
     topic: post.topic?.name || 'General',
     author: {
       name: post.author?.full_name || 'Anonymous',
-      avatar: post.author?.avatar_url || '/author.png',
+      avatar: post.author?.avatar_url,
       username: post.author?.username || 'anonymous'
     },
     date: new Date(post.created_at).toLocaleDateString('en-US', {

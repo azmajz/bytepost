@@ -5,7 +5,8 @@ import {
   IoMoon, 
   IoSunny, 
   IoMenuOutline, 
-  IoCloseOutline 
+  IoCloseOutline,
+  IoSearchOutline
 } from 'react-icons/io5';
 import { useTheme } from '../../context/ThemeContext';
 import './Header.css';
@@ -29,6 +30,10 @@ export default function Header() {
           </NextLink>
 
           <div className="btn-group">
+            <NextLink href="/search" className="search-btn-mobile">
+              <IoSearchOutline />
+            </NextLink>
+            
             <button 
               className={`theme-btn theme-btn-mobile ${isDarkTheme ? 'dark' : 'light'}`}
               onClick={toggleTheme}
@@ -45,13 +50,16 @@ export default function Header() {
           <div className="flex-wrapper">
             <ul className="desktop-nav">
               <li>
-                <a href="#" className="nav-link">Home</a>
+                <NextLink href="/" className="nav-link">Home</NextLink>
               </li>
               <li>
-                <a href="#" className="nav-link">About Me</a>
+                <NextLink href="/search" className="nav-link">Search</NextLink>
               </li>
               <li>
-                <a href="#" className="nav-link">Contact</a>
+                <NextLink href="/about" className="nav-link">About Me</NextLink>
+              </li>
+              <li>
+                <NextLink href="#" className="nav-link">Contact</NextLink>
               </li>
             </ul>
 
@@ -80,6 +88,12 @@ export default function Header() {
                 </li>
                 <li className="nav-item">
                   <a href="#" className="nav-link">Contact</a>
+                </li>
+                <li className="nav-item">
+                  <NextLink href="/search" className="nav-link">
+                    <IoSearchOutline />
+                    <span>Search</span>
+                  </NextLink>
                 </li>
               </ul>
             </div>

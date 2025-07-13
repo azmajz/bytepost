@@ -16,10 +16,16 @@
   box-shadow: 0 10px 10px hsla(0, 0%, 0%, 0.1);
 }
 
-.blog-card-banner { 
-  display: none; 
+.blog-card-banner {
+  display: block;
+  overflow: hidden;
+  border-radius: 5px;
 }
-
+.blog-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .blog-card-wrapper { 
   padding: 10px 5px; 
 }
@@ -97,15 +103,9 @@
   }
 
   .blog-card-banner {
-    display: block;
-    overflow: hidden;
-    border-radius: 5px;
-  }
 
-  .blog-banner-img {
-    width:  100%;
-    height: 100%;
-    object-fit: cover;
+    /* height: 160px; */
+    /* height:100%; */
   }
 }
 
@@ -137,7 +137,7 @@
     width:  56px;
     height: 56px;
     background: var(--action-primary);
-    padding: 3px;
+    /* padding: 3px; */
     border-radius: 50%;
   }
 

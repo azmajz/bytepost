@@ -1,0 +1,241 @@
+.search-page {
+  padding: 4rem 0;
+  min-height: 80vh;
+}
+
+.search-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.search-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: var(--foreground-primary);
+}
+
+.search-subtitle {
+  font-size: var(--fs-3);
+  color: var(--foreground-secondary);
+}
+
+.search-container {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+.search-input-wrapper {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.875rem 3rem 0.875rem 1.25rem;
+  font-size: var(--fs-4);
+  border: 2px solid var(--action-primary);
+  border-radius: 10px;
+  background: var(--background-primary);
+  color: var(--foreground-primary);
+  transition: 0.25s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px hsla(61, 100%, 50%, 0.1);
+}
+
+.search-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--foreground-tertiary);
+}
+
+.search-stats {
+  text-align: center;
+  color: var(--foreground-secondary);
+  font-size: var(--fs-4);
+}
+
+.search-results {
+  margin-top: 2rem;
+}
+
+/* Custom layout for search results - responsive grid */
+.search-results .blog-card-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .search-results .blog-card-group {
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .search-results .blog-card-group {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 0;
+  }
+}
+
+.no-results {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--foreground-secondary);
+}
+
+.no-results p:first-child {
+  font-size: var(--fs-3);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--foreground-primary);
+}
+
+.no-results p:last-child {
+  color: var(--foreground-tertiary);
+  font-size: var(--fs-4);
+}
+
+
+
+.search-suggestions {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 0 1rem;
+}
+
+.search-suggestions h2 {
+  font-size: var(--fs-3);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--foreground-primary);
+}
+
+.suggestions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.suggestion-tag {
+  padding: 0.6rem 1.2rem;
+  background: var(--action-secondary);
+  border: 2px solid var(--action-primary);
+  border-radius: 25px;
+  color: var(--foreground-secondary);
+  font-size: var(--fs-5);
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.suggestion-tag:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+/* Dark theme adjustments */
+
+.dark-theme .search-input {
+  background: var(--background-primary);
+  border-color: var(--action-primary);
+  color: var(--foreground-primary);
+}
+
+.dark-theme .suggestion-tag {
+  background: var(--action-primary);
+  color: var(--foreground-secondary);
+}
+
+.dark-theme .suggestion-tag:hover {
+  background: var(--foreground-primary);
+  color: var(--action-primary);
+}
+
+/* Responsive design */
+@media (min-width: 650px) {
+  .search-page {
+    padding: 2rem 0;
+  }
+  
+  .search-header {
+    margin-bottom: 3rem;
+  }
+  
+  .search-title {
+    font-size: var(--fs-1);
+  }
+  
+  .search-subtitle {
+    font-size: var(--fs-2);
+  }
+  
+  .search-container {
+    margin-bottom: 3rem;
+  }
+  
+  .search-input {
+    padding: 1rem 3rem 1rem 1.5rem;
+    font-size: var(--fs-3);
+  }
+  
+  .search-suggestions {
+    margin-top: 3rem;
+  }
+  
+  .search-suggestions h2 {
+    font-size: var(--fs-2);
+    margin-bottom: 1.5rem;
+  }
+  
+  .suggestions-grid {
+    gap: 1rem;
+  }
+  
+  .suggestion-tag {
+    padding: 0.75rem 1.5rem;
+    font-size: var(--fs-4);
+  }
+  
+  .no-results {
+    padding: 3rem 1rem;
+  }
+  
+  .no-results p:first-child {
+    font-size: var(--fs-2);
+  }
+}
+
+@media (min-width: 1024px) {
+  .search-page {
+    padding: 4rem 0;
+  }
+  
+  .search-header {
+    padding: 0;
+  }
+  
+  .search-container {
+    padding: 0;
+  }
+  
+  .search-suggestions {
+    padding: 0;
+  }
+} 

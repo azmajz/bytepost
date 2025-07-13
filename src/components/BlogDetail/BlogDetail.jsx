@@ -54,10 +54,13 @@ export default function BlogDetail({ post }) {
     return tempDiv.innerHTML;
   }, []);
 
-  // Update quillContent when post.content changes
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+
+  // Update quillContent when post.content changes
     setQuillContent(transformQuillContent(post.content));
-  }, [post.id]);
+  }, []);
 
   // Memoize transformedPost based on post
   const transformedPost = useMemo(() => ({
@@ -71,9 +74,9 @@ export default function BlogDetail({ post }) {
     topic: post.topic?.name || 'General',
     author: {
       name: post.author?.full_name || 'Anonymous',
-      avatar: post.author?.avatar_url || '/author.png'
+      avatar: post.author?.avatar_url
     },
-    image: post.cover_image_url || '/placeholder.png',
+    image: post.cover_image_url,
     tags: []
   }), [post.id]);
 
@@ -140,9 +143,9 @@ export default function BlogDetail({ post }) {
             </div> */}
           </div>
           {/* Hero Image */}
-          <div className="hero-image-container">
+          {transformedPost.image  && <div className="hero-image-container">
             <img src={transformedPost.image} alt={transformedPost.title} className="hero-image" />
-          </div>
+          </div>}
         </div>
       </div>
       {/* Main Content Area */}
@@ -156,11 +159,11 @@ export default function BlogDetail({ post }) {
             />
             {/* Article Footer */}
             <div className="article-footer">
-              <div className="article-tags">
+              {transformedPost.tags.length>0 && <div className="article-tags">
                 {transformedPost.tags.map((tag, index) => (
                   <span key={index} className="tag">{tag}</span>
                 ))}
-              </div>
+              </div>}
               <div className="article-share">
                 <h4>Share this article</h4>
                 <div className="share-buttons">

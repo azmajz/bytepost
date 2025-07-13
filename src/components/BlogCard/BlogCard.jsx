@@ -1,17 +1,23 @@
 import { IoTimeOutline } from 'react-icons/io5';
 import Link from 'next/link';
+import BlogImagePlaceholder from '../Placeholder/BlogImagePlaceholder';
+import AuthorImagePlaceholder from '../Placeholder/AuthorImagePlaceholder';
 import './BlogCard.css';
 
 export default function BlogCard({ post }) {
   return (
     <div className="blog-card">
       <div className="blog-card-banner">
-        <img 
-          src={post.image} 
-          alt={post.title}
-          width="250" 
-          className="blog-banner-img" 
-        />
+        {post.image ? (
+          <img 
+            src={post.image} 
+            alt={post.title}
+            width="250" 
+            className="blog-banner-img" 
+          />
+        ) : (
+          <BlogImagePlaceholder />
+        )}
       </div>
 
       <div className="blog-card-wrapper">
@@ -29,7 +35,11 @@ export default function BlogCard({ post }) {
 
         <div className="wrapper-flex">
           <div className="profile-wrapper">
-            <img src={post.author.avatar} alt={post.author.name} width="50" />
+            {post.author.avatar ? (
+              <img src={post.author.avatar} alt={post.author.name} width="50" />
+            ) : (
+              <AuthorImagePlaceholder />
+            )}
           </div>
 
           <div className="wrapper">

@@ -1,7 +1,8 @@
 'use client';
-import { createContext, useContext, useState, useEffect } from 'react';
 
-const ThemeContext = createContext();
+import { createContext, useContext, useState, useEffect, useLayoutEffect } from 'react';
+
+const ThemeContext = createContext(null);
 
 export const useTheme = () => {
   const context = useContext(ThemeContext);
@@ -12,47 +13,34 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  // Initialize theme from localStorage or default to light theme
-  const [isDarkTheme, setIsDarkTheme] = useState(() => {
-    // Only run on client side
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('bytepost-theme');
-      return savedTheme === 'dark';
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  // Load theme from localStorage on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('bytepost-theme');
+    if (savedTheme) {
+      setIsDarkTheme(savedTheme === 'dark');
     }
-    return false;
-  });
+  }, []);
+
+  // Update body class
+  useLayoutEffect(() => {
+    const body = document.body;
+    body.classList.toggle('dark-theme', isDarkTheme);
+    body.classList.toggle('light-theme', !isDarkTheme);
+  }, [isDarkTheme]);
 
   const toggleTheme = () => {
-    setIsDarkTheme(prev => !prev);
-  };
-
-  // Save theme preference to localStorage whenever it changes
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('bytepost-theme', isDarkTheme ? 'dark' : 'light');
-    }
-  }, [isDarkTheme]);
-
-  // Update body class when theme changes
-  useEffect(() => {
-    const body = document.body;
-    if (isDarkTheme) {
-      body.classList.remove('light-theme');
-      body.classList.add('dark-theme');
-    } else {
-      body.classList.remove('dark-theme');
-      body.classList.add('light-theme');
-    }
-  }, [isDarkTheme]);
-
-  const value = {
-    isDarkTheme,
-    toggleTheme
+    setIsDarkTheme(prev => {
+      const newTheme = !prev;
+      localStorage.setItem('bytepost-theme', newTheme ? 'dark' : 'light');
+      return newTheme;
+    });
   };
 
   return (
-    <ThemeContext.Provider value={value}>
+    <ThemeContext.Provider value={{ isDarkTheme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
-}; 
+};

@@ -194,7 +194,7 @@
 .blog-content-wrapper {
   max-width: 900px;
   margin: 0 auto;
-  padding: 2rem 2rem;
+  padding: 0 2rem;
 }
 
 .content-container {
@@ -223,7 +223,7 @@
 .article-body h3 {
   font-size: 1.5rem;
   font-weight: 600;
-  margin: 2.5rem 0 1rem;
+  margin: 1.5rem 0;
   color: var(--foreground-primary);
 }
 
@@ -279,8 +279,7 @@
 \*-----------------------------------*/
 
 .article-footer {
-  margin-top: 4rem;
-  padding-top: 3rem;
+  padding: 2rem 0 3rem 0;
   border-top: 1px solid var(--action-primary);
 }
 
@@ -499,7 +498,7 @@
 
 @media (max-width: 768px) {
   .blog-hero {
-    padding: 1rem 0 3rem;
+    padding-top: 3rem;
   }
   
   .hero-container {

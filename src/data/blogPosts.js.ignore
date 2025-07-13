@@ -489,6 +489,279 @@ function Counter() {
     tags: ['CSS', 'Grid', 'Flexbox', 'Web Design'],
     views: 1893,
     likes: 134
+  },
+  {
+    slug: 'building-modern-themes-with-css-custom-properties',
+    title: 'Building Modern Themes with CSS Custom Properties: A Complete Guide',
+    excerpt: 'Learn how to create flexible, maintainable theme systems using CSS custom properties (CSS variables) for seamless light and dark mode implementations.',
+    content: `
+      <p>CSS Custom Properties, also known as CSS variables, have revolutionized how we approach theming in modern web applications. They provide a powerful and flexible way to create dynamic theme systems that can adapt to user preferences and design requirements.</p>
+      
+      <h2>Understanding CSS Custom Properties</h2>
+      <p>CSS Custom Properties allow you to define reusable values that can be referenced throughout your stylesheet. They're particularly powerful for theming because they can be dynamically changed using JavaScript or CSS media queries.</p>
+      
+      <pre><code>:root {
+  /* Light theme variables */
+  --background-primary: hsl(0, 0%, 100%);
+  --background-secondary: rgb(247, 247, 247);
+  --foreground-primary: hsl(218, 23%, 23%);
+  --foreground-secondary: hsl(216, 15%, 52%);
+  --accent: #3d71a0;
+}
+
+.dark-theme {
+  /* Dark theme variables */
+  --background-primary: hsl(218, 23%, 23%);
+  --background-secondary: hsl(220, 26%, 14%);
+  --foreground-primary: hsl(210, 38%, 95%);
+  --foreground-secondary: hsl(211, 25%, 84%);
+  --accent: #3d71a0;
+}</code></pre>
+      
+      <h2>Setting Up Your Theme Structure</h2>
+      <p>A well-organized theme system starts with a clear structure. Here's how to organize your CSS custom properties for maximum maintainability:</p>
+      
+      <pre><code>/* Base theme variables */
+:root {
+  /* Color palette */
+  --color-primary: #3d71a0;
+  --color-secondary: #6c757d;
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  --color-error: #dc3545;
+  
+  /* Typography */
+  --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-base: 16px;
+  --line-height-base: 1.5;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Border radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}</code></pre>
+      
+      <h2>Creating Light and Dark Themes</h2>
+      <p>The real power of CSS custom properties shines when creating multiple themes. Here's how to implement a comprehensive light and dark theme system:</p>
+      
+      <pre><code>.light-theme {
+  /* Background colors */
+  --background-primary: hsl(0, 0%, 100%);
+  --background-secondary: rgb(247, 247, 247);
+  --background-tertiary: hsl(0, 0%, 96%);
+  
+  /* Foreground colors */
+  --foreground-primary: hsl(218, 23%, 23%);
+  --foreground-secondary: hsl(216, 15%, 52%);
+  --foreground-tertiary: hsl(214, 20%, 69%);
+  
+  /* Action colors */
+  --action-primary: hsl(214, 32%, 91%);
+  --action-secondary: hsl(210, 38%, 95%);
+  --action-hover: hsl(214, 32%, 85%);
+  
+  /* Border colors */
+  --border-primary: hsl(214, 20%, 69%);
+  --border-secondary: hsl(214, 32%, 91%);
+}
+
+.dark-theme {
+  /* Background colors */
+  --background-primary: hsl(218, 23%, 23%);
+  --background-secondary: hsl(220, 26%, 14%);
+  --background-tertiary: hsl(220, 26%, 18%);
+  
+  /* Foreground colors */
+  --foreground-primary: hsl(210, 38%, 95%);
+  --foreground-secondary: hsl(211, 25%, 84%);
+  --foreground-tertiary: hsl(214, 20%, 69%);
+  
+  /* Action colors */
+  --action-primary: hsl(216, 15%, 52%);
+  --action-secondary: #3a465a;
+  --action-hover: hsl(216, 15%, 45%);
+  
+  /* Border colors */
+  --border-primary: hsl(216, 15%, 52%);
+  --border-secondary: hsl(220, 26%, 18%);
+}</code></pre>
+      
+      <h2>Implementing Theme Switching</h2>
+      <p>Theme switching can be implemented using JavaScript to dynamically change the CSS custom properties. Here's a complete implementation:</p>
+      
+      <pre><code>// Theme context for React
+import { createContext, useContext, useState, useEffect } from 'react';
+
+const ThemeContext = createContext();
+
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light');
+  
+  useEffect(() => {
+    // Apply theme to document
+    document.documentElement.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
+    
+    // Store preference in localStorage
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+  
+  useEffect(() => {
+    // Load saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else {
+      // Check system preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+    }
+  }, []);
+  
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
+  
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+}</code></pre>
+      
+      <h2>Using CSS Custom Properties in Components</h2>
+      <p>Once you have your theme system set up, using the custom properties in your components becomes straightforward:</p>
+      
+      <pre><code>.card {
+  background: var(--background-primary);
+  color: var(--foreground-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.button {
+  background: var(--action-primary);
+  color: var(--foreground-primary);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-family-primary);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background: var(--action-hover);
+}
+
+.button.primary {
+  background: var(--color-primary);
+  color: white;
+}</code></pre>
+      
+      <h2>Advanced Theme Features</h2>
+      <p>CSS custom properties enable advanced theming features that would be difficult to achieve with traditional CSS:</p>
+      
+      <h3>Dynamic Color Calculations</h3>
+      <pre><code>:root {
+  --base-hue: 214;
+  --base-saturation: 32%;
+  --base-lightness: 91%;
+  
+  --action-primary: hsl(var(--base-hue), var(--base-saturation), var(--base-lightness));
+  --action-hover: hsl(var(--base-hue), var(--base-saturation), calc(var(--base-lightness) - 6%));
+}</code></pre>
+      
+      <h3>Conditional Theming</h3>
+      <pre><code>.component {
+  background: var(--background-primary);
+  color: var(--foreground-primary);
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .component {
+    border: 2px solid var(--foreground-primary);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .component {
+    transition: none;
+  }
+}</code></pre>
+      
+      <h2>Performance Considerations</h2>
+      <p>While CSS custom properties are powerful, there are some performance considerations to keep in mind:</p>
+      
+      <ul>
+        <li><strong>Browser Support:</strong> CSS custom properties are supported in all modern browsers</li>
+        <li><strong>Performance Impact:</strong> Minimal performance impact when used correctly</li>
+        <li><strong>Fallbacks:</strong> Always provide fallback values for older browsers</li>
+        <li><strong>Caching:</strong> CSS custom properties work well with CSS caching strategies</li>
+      </ul>
+      
+      <h2>Best Practices</h2>
+      <p>Follow these best practices when implementing CSS custom properties for theming:</p>
+      
+      <ol>
+        <li><strong>Use semantic names:</strong> Name variables based on their purpose, not their value</li>
+        <li><strong>Organize logically:</strong> Group related variables together</li>
+        <li><strong>Provide fallbacks:</strong> Always include fallback values for older browsers</li>
+        <li><strong>Test thoroughly:</strong> Test your themes across different browsers and devices</li>
+        <li><strong>Document your system:</strong> Maintain clear documentation of your theme variables</li>
+        <li><strong>Use consistent naming:</strong> Follow a consistent naming convention throughout your project</li>
+      </ol>
+      
+      <h2>Conclusion</h2>
+      <p>CSS custom properties provide a powerful and flexible foundation for building modern theme systems. They enable dynamic theming, improve maintainability, and create better user experiences through personalized interfaces.</p>
+      
+      <p>By following the patterns and best practices outlined in this guide, you can create robust theme systems that scale with your application's needs. Whether you're building a simple light/dark mode toggle or a complex multi-theme system, CSS custom properties give you the tools you need to succeed.</p>
+      
+      <p>Remember that the key to successful theming is not just the technical implementation, but also the thoughtful design of your color palette and the consideration of accessibility standards. A well-designed theme system should work for all users, regardless of their preferences or needs.</p>
+    `,
+    image: '/blog-4.png',
+    topic: 'CSS',
+    author: {
+      name: 'Julia Walker',
+      avatar: '/author.png',
+      bio: 'Senior Frontend Developer with 8+ years of experience in React, Next.js, and modern web technologies. Passionate about creating performant and accessible web applications.',
+      twitter: 'juliawalker',
+      github: 'juliawalker'
+    },
+    date: 'January 10, 2024',
+    readTime: '15 min read',
+    tags: ['CSS', 'Theming', 'Custom Properties', 'Web Design'],
+    views: 3421,
+    likes: 234
   }
 ];
 

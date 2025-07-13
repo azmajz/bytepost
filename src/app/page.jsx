@@ -9,7 +9,7 @@ export default async function Home() {
   return (
     <>
         <Hero />
-        <div className="main">
+        <div className="home-main">
           <div className="container">
             <BlogList blogPosts={blogPosts} />
             <Sidebar />

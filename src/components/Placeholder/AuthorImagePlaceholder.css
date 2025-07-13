@@ -1,0 +1,33 @@
+/*-----------------------------------*\ 
+  #AUTHOR IMAGE PLACEHOLDER
+\*-----------------------------------*/
+
+.author-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--background-secondary);
+  color: var(--foreground-secondary);
+  /* border: 1px solid var(--foreground-tertiary); */
+}
+
+.author-icon {
+  opacity: 0.5;
+}
+
+.author-icon svg {
+  color: inherit;
+}
+
+/*-----------------------------------*\ 
+  #DARK THEME FOR AUTHOR
+\*-----------------------------------*/
+
+.dark-theme .author-placeholder {
+  background: var(--action-secondary);
+  border-color: var(--foreground-tertiary);
+  color: var(--foreground-secondary);
+} 

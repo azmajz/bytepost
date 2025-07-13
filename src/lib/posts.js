@@ -94,4 +94,70 @@ export const getPostMetadata = async(slug) => {
       console.error('Error in getPostBySlug:', error)
       return null
     }
-  } 
+  }
+
+export const searchPosts = async (query) => {
+  try {
+    if (!query || query.trim() === '') {
+      return []
+    }
+
+    const searchQuery = query.trim().toLowerCase()
+
+    const { data: posts, error } = await supabase
+      .from('posts')
+      .select(`
+        *,
+        author:authors (
+          id,
+          username,
+          full_name,
+          avatar_url
+        ),
+        topic:topics (
+          id,
+          name,
+          slug
+        ),
+        post_tags (
+          tag:tags (
+            name,
+            slug
+          )
+        )
+      `)
+      .eq('published', true)
+      .or(`title.ilike.%${searchQuery}%`)
+      .order('created_at', { ascending: false })
+
+    if (error) {
+      console.error('Error searching posts:', error)
+      return []
+    }
+
+    return posts || []
+  } catch (error) {
+    console.error('Error in searchPosts:', error)
+    return []
+  }
+}
+
+export const getPopularTopics = async () => {
+  try {
+    const { data: topics, error } = await supabase
+      .from('topics')
+      .select('name, slug, post_count')
+      .order('post_count', { ascending: false })
+      .limit(6)
+
+    if (error) {
+      console.error('Error fetching popular topics:', error)
+      return []
+    }
+
+    return topics || []
+  } catch (error) {
+    console.error('Error in getPopularTopics:', error)
+    return []
+  }
+} 
