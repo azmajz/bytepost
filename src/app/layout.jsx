@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        
+        <meta name="google-site-verification" content="a5CrsXb9_5wqCm6ou6T-koFUmnEZsoKBASMgS8PnPdk" />
         {/* Favicon */}
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="/favicon.ico" />
