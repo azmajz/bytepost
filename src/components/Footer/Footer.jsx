@@ -2,7 +2,7 @@ import './Footer.css';
 
 export default function Footer() {
   return (
-    <footer>
+    <footer id="footer">
       <div className="container">
         <div className="wrapper">
           <a href="#" className="footer-logo">

@@ -21,7 +21,7 @@ export default function Header() {
   };
 
   return (
-    <header>
+    <header id="header">
       <div className="container">
         <nav className="navbar">
           <NextLink href="/">
@@ -59,7 +59,7 @@ export default function Header() {
                 <NextLink href="/about" className="nav-link">About Me</NextLink>
               </li>
               <li>
-                <NextLink href="#" className="nav-link">Contact</NextLink>
+                <NextLink href="/register" className="nav-link">Register</NextLink>
               </li>
             </ul>
 

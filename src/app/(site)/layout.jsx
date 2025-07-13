@@ -1,45 +1,14 @@
-import './globals.css'
-import { ThemeProvider } from '../context/ThemeContext';
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
+import '@/app/globals.css'
+import { ThemeProvider } from '@/context/ThemeContext';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
+import { Toaster } from 'react-hot-toast';
+import { getLayoutMetadata } from '@/data/metadata';
+import { toastOptions } from '@/config/toast';
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-export const metadata = {
-    title: "BytePost - Powerful Tech Posts, Streamlined",
-    description: "Discover BytePost, your go-to source for concise, insightful tech articles, tutorials, and developer posts. Stay ahead with quick, practical content crafted for coders and tech enthusiasts.",
-    keywords: "BytePost, tech blog, programming articles, developer tutorials, coding tips, tech news, software development, web development, programming tutorials",
-    robots: "index, follow",
-    alternates: {
-      canonical: appUrl,
-      languages: {
-        'x-default': appUrl,
-        'en': appUrl,
-      },
-    },
-    openGraph: {
-      title: "BytePost - Quick Tech Articles & Dev Posts",
-      description: "Discover BytePost, your go-to source for concise, insightful tech articles, tutorials, and developer posts. Stay ahead with quick, practical content crafted for coders and tech enthusiasts.",
-      type: "website",
-      url: appUrl,
-      siteName: "BytePost",
-      locale: "en_US",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "BytePost - Quick Tech Articles & Dev Posts",
-      description: "Discover BytePost, your go-to source for concise, insightful tech articles, tutorials, and developer posts. Stay ahead with quick, practical content crafted for coders and tech enthusiasts.",
-      site: "@bytepost",
-      creator: "@bytepost",
-    },
-    icons: {
-      icon: "/favicon.ico",
-      apple: "/favicon.png",
-    },
-    other: {
-      "X-UA-Compatible": "IE=edge",
-    },
-  };
+export const metadata = getLayoutMetadata(appUrl)
 
 export default function RootLayout({ children }) {
   return (
@@ -51,18 +20,15 @@ export default function RootLayout({ children }) {
         {/* Favicon */}
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="/favicon.ico" />
-        
         {/* Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
-        
         {/* Quill Editor */}
         <link href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/quill-table-better@1/dist/quill-table-better.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/quill-table-better@1/dist/quill-table-better.js"></script>
-        
         {/* Structured Data */}
         <script
           type="application/ld+json"
@@ -85,7 +51,12 @@ export default function RootLayout({ children }) {
       <body className="light-theme">
         <ThemeProvider>
           <Header />
-          <main className='layout-main'>  
+          <Toaster
+            position="top-right"
+            toastOptions={toastOptions}
+            theme={typeof window !== 'undefined' && document.body.classList.contains('dark-theme') ? 'dark' : 'light'}
+          />
+          <main className='layout-main'>
             {children}
           </main>
           <Footer />
