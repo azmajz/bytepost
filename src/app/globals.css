@@ -17,7 +17,7 @@
    * light theme colors 
    */
   --background-primary: hsl(0, 0%, 100%);
---background-secondary: rgb(247, 247, 247);
+  --background-secondary: rgb(247, 247, 247);
   --action-primary: hsl(214, 32%, 91%);
   --action-secondary: hsl(210, 38%, 95%);
   --foreground-primary: hsl(218, 23%, 23%);
@@ -211,9 +211,12 @@ html {
 .text-tiny {
   font-size: var(--fs-5);
 }
+
 .text-accent {
-  color: var(--accent);;
+  color: var(--accent);
+  ;
 }
+
 /*-----------------------------------*\ 
   #REUSED STYLE
 \*-----------------------------------*/
@@ -301,4 +304,3 @@ html {
 .dark-theme .btn-primary:hover {
   color: var(--background-primary);
 }
-

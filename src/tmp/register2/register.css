@@ -186,7 +186,7 @@
 .dark-theme .register-card {
   background: var(--background-primary);
   box-shadow: 0 4px 32px 0 rgba(20, 20, 40, 0.18);
-  border: 1.5px solid var(--action-primary);
+  /* border: 1.5px solid var(--action-primary); */
 }
 
 .dark-theme .register-title,
