@@ -6,6 +6,7 @@ import { useEffect, useState, useMemo, useCallback } from 'react';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
 import './BlogDetail.css';
+import AuthorImagePlaceholder from '../Placeholder/AuthorImagePlaceholder';
 
 
 export default function BlogDetail({ post }) {
@@ -58,7 +59,7 @@ export default function BlogDetail({ post }) {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
 
-  // Update quillContent when post.content changes
+    // Update quillContent when post.content changes
     setQuillContent(transformQuillContent(post.content));
   }, []);
 
@@ -102,22 +103,37 @@ export default function BlogDetail({ post }) {
       <div className="blog-hero">
         <div className="hero-container">
           {/* Hero Content */}
-          <div className="hero-content">              
+          <div className="hero-content">
             <h1 className="hero-title">{transformedPost.title}</h1>
             {/* <p className="hero-subtitle">{transformedPost.excerpt}</p> */}
-            <div className="hero-meta">
-              <span className="topic-badge">{transformedPost.topic}</span>
-              <div className="hero-stats">
-                <div className="stats-group">
-                  <span className="stat">
-                    <IoTimeOutline />
-                    {transformedPost.readTime}
-                  </span>
-                  <span className="dot">·</span>
-                  <span className="stat">
+            <div className="hero-meta improved-hero-meta">
+              <div className="meta-left">
+                {/* <img
+                  src={transformedPost.author.avatar || '/author.png'}
+                  alt={transformedPost.author.name}
+                  className="author-avatar meta-avatar"
+                /> */}
+                {transformedPost.author.avatar ? (
+                  <img src={transformedPost.author.avatar} alt={transformedPost.author.name} width="50" />
+                ) : (
+                  <AuthorImagePlaceholder />
+                )}
+
+
+                <div className="meta-author-details">
+                  <span className="meta-author-name">{transformedPost.author.name}</span>
+                  <span className="meta-date">
                     {new Date(transformedPost.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </span>
                 </div>
+                <span className="topic-badge improved-topic-badge">{transformedPost.topic}</span>
+              </div>
+              <div className="meta-stats">
+                <span className="stat">
+                  <IoTimeOutline />
+                  {transformedPost.readTime}
+                </span>
+                <span className="dot">·</span>
                 <span className="stat">
                   <IoAnalyticsOutline />
                   {transformedPost.views.toLocaleString()} views
@@ -143,7 +159,7 @@ export default function BlogDetail({ post }) {
             </div> */}
           </div>
           {/* Hero Image */}
-          {transformedPost.image  && <div className="hero-image-container">
+          {transformedPost.image && <div className="hero-image-container">
             <img src={transformedPost.image} alt={transformedPost.title} className="hero-image" />
           </div>}
         </div>
@@ -153,13 +169,13 @@ export default function BlogDetail({ post }) {
         <div className="content-container">
           {/* Article Content */}
           <article className="article-content">
-            <div 
+            <div
               className="article-body"
               dangerouslySetInnerHTML={{ __html: quillContent }}
             />
             {/* Article Footer */}
             <div className="article-footer">
-              {transformedPost.tags.length>0 && <div className="article-tags">
+              {transformedPost.tags.length > 0 && <div className="article-tags">
                 {transformedPost.tags.map((tag, index) => (
                   <span key={index} className="tag">{tag}</span>
                 ))}

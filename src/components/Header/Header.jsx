@@ -1,16 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { 
-  IoMoon, 
-  IoSunny, 
-  IoMenuOutline, 
+import {
+  IoMoon,
+  IoSunny,
+  IoMenuOutline,
   IoCloseOutline,
   IoSearchOutline
 } from 'react-icons/io5';
 import { useTheme } from '../../context/ThemeContext';
 import './Header.css';
 import NextLink from 'next/link';
+import Image from 'next/image';
 
 export default function Header() {
   const [isMobileNavActive, setIsMobileNavActive] = useState(false);
@@ -25,16 +26,16 @@ export default function Header() {
       <div className="container">
         <nav className="navbar">
           <NextLink href="/">
-            <img src="/logo-light.png" alt="BytePost's logo" width="180" height="40" className="logo-light" />
-            <img src="/logo-dark.png" alt="BytePost's logo" width="180" height="40" className="logo-dark" />
+            <Image src="/logo-light.png" alt="BytePost's logo" width={180} height={40} className="logo-light header-logo-img" priority />
+            <Image src="/logo-dark.png" alt="BytePost's logo" width={180} height={40} className="logo-dark header-logo-img" priority />
           </NextLink>
 
           <div className="btn-group">
             <NextLink href="/search" className="search-btn-mobile">
               <IoSearchOutline />
             </NextLink>
-            
-            <button 
+
+            <button
               className={`theme-btn theme-btn-mobile ${isDarkTheme ? 'dark' : 'light'}`}
               onClick={toggleTheme}
             >
@@ -56,14 +57,11 @@ export default function Header() {
                 <NextLink href="/search" className="nav-link">Search</NextLink>
               </li>
               <li>
-                <NextLink href="/about" className="nav-link">About Me</NextLink>
-              </li>
-              <li>
                 <NextLink href="/register" className="nav-link">Register</NextLink>
               </li>
             </ul>
 
-            <button 
+            <button
               className={`theme-btn theme-btn-desktop ${isDarkTheme ? 'dark' : 'light'}`}
               onClick={toggleTheme}
             >
@@ -80,14 +78,11 @@ export default function Header() {
             <div className="wrapper">
               <p className="h3 nav-title">Main Menu</p>
               <ul>
-                <li className="nav-item">
-                  <a href="#" className="nav-link">Home</a>
+                <li>
+                  <NextLink href="/" className="nav-link">Home</NextLink>
                 </li>
-                <li className="nav-item">
-                  <a href="#" className="nav-link">About Me</a>
-                </li>
-                <li className="nav-item">
-                  <a href="#" className="nav-link">Contact</a>
+                <li>
+                  <NextLink href="/register" className="nav-link">Register</NextLink>
                 </li>
                 <li className="nav-item">
                   <NextLink href="/search" className="nav-link">

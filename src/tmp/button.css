@@ -1,0 +1,39 @@
+/* <span className="topic-badge improved-topic-badge">{transformedPost.topic}</span> */
+
+
+.improved-topic-badge {
+    background: linear-gradient(90deg, var(--accent) 0%, var(--navy-blue) 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.38rem 1.3rem;
+    border-radius: 999px;
+    margin-left: 1.5rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10), 0 1.5px 4px rgba(0,0,0,0.07);
+    border: 1.5px solid var(--accent);
+    text-transform: none;
+    transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s, background 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+  .improved-topic-badge::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.01) 100%);
+    transform: skewX(-20deg);
+    pointer-events: none;
+    transition: left 0.3s;
+  }
+  .improved-topic-badge:hover {
+    background: linear-gradient(90deg, var(--navy-blue) 0%, var(--accent) 100%);
+    transform: scale(1.06);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.10);
+  }
+  .improved-topic-badge:hover::after {
+    left: 100%;
+  }
