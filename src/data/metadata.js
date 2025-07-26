@@ -34,5 +34,19 @@ export const getLayoutMetadata = (appUrl) => {
             "X-UA-Compatible": "IE=edge",
         },
     };
+}
 
-} 
+export const getStructuredData = (appUrl) => {
+   return {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "BytePost",
+        "url": appUrl,
+        "description": "Discover BytePost, your go-to source for concise, insightful tech articles, tutorials, and developer posts.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": `${appUrl}/search?q={search_term_string}`,
+          "query-input": "required name=search_term_string"
+        }
+      }
+}

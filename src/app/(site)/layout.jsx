@@ -3,12 +3,12 @@ import { ThemeProvider } from '@/context/ThemeContext';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import { Toaster } from 'react-hot-toast';
-import { getLayoutMetadata } from '@/data/metadata';
+import { getLayoutMetadata, getStructuredData } from '@/data/metadata';
 import { toastOptions } from '@/config/toast';
+import { APP_URL } from '@/config/app';
 
-const appUrl = process.env.NEXT_PUBLIC_APP_URL;
-
-export const metadata = getLayoutMetadata(appUrl)
+export const metadata = getLayoutMetadata(APP_URL)
+const structuredData = JSON.stringify(getStructuredData(APP_URL))
 
 export default function RootLayout({ children }) {
   return (
@@ -33,18 +33,7 @@ export default function RootLayout({ children }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "name": "BytePost",
-              "url": "https://bytepost.web.app",
-              "description": "Discover BytePost, your go-to source for concise, insightful tech articles, tutorials, and developer posts.",
-              "potentialAction": {
-                "@type": "SearchAction",
-                "target": "https://bytepost.web.app/search?q={search_term_string}",
-                "query-input": "required name=search_term_string"
-              }
-            })
+            __html: structuredData
           }}
         />
       </head>

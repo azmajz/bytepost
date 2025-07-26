@@ -1,4 +1,5 @@
 import './Hero.css';
+import Link from 'next/link';
 
 export default function Hero() {
   return (
@@ -13,8 +14,8 @@ export default function Hero() {
             Join us to explore, engage with, and create your own tech bytes — your place to read and share.</p>
 
           <div className="btn-group">
-            <a href="#" className="btn btn-primary">Contact Me</a>
-            <a href="#" className="btn btn-secondary">About Me</a>
+            <Link href="/contact" className="btn btn-primary">Contact Us</Link>
+            <Link href="/about" className="btn btn-secondary">About Us</Link>
           </div>
         </div>
 

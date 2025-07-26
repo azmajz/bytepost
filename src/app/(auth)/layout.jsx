@@ -1,12 +1,12 @@
 import '@/app/globals.css'
 import { ThemeProvider } from '@/context/ThemeContext';
 import { Toaster } from 'react-hot-toast';
+import { getLayoutMetadata, getStructuredData } from '@/data/metadata';
 import { toastOptions } from '@/config/toast';
-import { getLayoutMetadata } from '@/data/metadata';
+import { APP_URL } from '@/config/app';
 
-const appUrl = process.env.NEXT_PUBLIC_APP_URL;
-
-export const metadata = getLayoutMetadata(appUrl)
+export const metadata = getLayoutMetadata(APP_URL)
+const structuredData = JSON.stringify(getStructuredData(APP_URL))
 
 export default function RootLayout({ children }) {
   return (
@@ -22,6 +22,13 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: structuredData
+          }}
+        />
       </head>
       <body className="light-theme">
         <ThemeProvider>
