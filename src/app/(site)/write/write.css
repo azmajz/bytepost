@@ -192,6 +192,7 @@
   border: none;
   outline: none;
   background: transparent;
+  width: 800px;
 }
 
 /*-----------------------------------*\ 
@@ -385,7 +386,10 @@
 }
 
 /* Quill Editor Customization */
-.write-editor .ql-editor {
+#react-quill .ql-container  {
+  margin-top: 20px;
+}
+#react-quill .ql-editor {
   padding: 0;
   font-size: 1.125rem;
   line-height: 1.8;
@@ -397,47 +401,45 @@
 }
 
 /* Enhanced Placeholder Styling */
-.write-editor .ql-editor.ql-blank::before {
+#react-quill .ql-editor.ql-blank::before {
   font-style: normal;
   font-weight: 500;
   font-size: 1.25rem;
   letter-spacing: -0.01em;
   padding: 0;
   opacity: 0.7;
-  position: relative;
   left: 0;
 }
 
-
-.write-editor .ql-editor p {
+#react-quill .ql-editor p {
   margin-bottom: 1.5rem;
 }
 
-.write-editor .ql-editor h1,
-.write-editor .ql-editor h2,
-.write-editor .ql-editor h3,
-.write-editor .ql-editor h4,
-.write-editor .ql-editor h5,
-.write-editor .ql-editor h6 {
+#react-quill .ql-editor h1,
+#react-quill .ql-editor h2,
+#react-quill .ql-editor h3,
+#react-quill .ql-editor h4,
+#react-quill .ql-editor h5,
+#react-quill .ql-editor h6 {
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-weight: 700;
   color: var(--foreground-primary);
 }
 
-.write-editor .ql-editor h1 {
+#react-quill .ql-editor h1 {
   font-size: 2rem;
 }
 
-.write-editor .ql-editor h2 {
+#react-quill .ql-editor h2 {
   font-size: 1.75rem;
 }
 
-.write-editor .ql-editor h3 {
+#react-quill .ql-editor h3 {
   font-size: 1.5rem;
 }
 
-.write-editor .ql-editor blockquote {
+#react-quill .ql-editor blockquote {
   border-left: 4px solid var(--accent);
   padding-left: 1.5rem;
   margin: 2rem 0;
@@ -445,7 +447,7 @@
   color: var(--foreground-secondary);
 }
 
-.write-editor .ql-editor code {
+#react-quill .ql-editor code {
   background: var(--action-secondary);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
@@ -453,7 +455,7 @@
   font-size: 0.875rem;
 }
 
-.write-editor .ql-editor pre {
+#react-quill .ql-editor pre {
   background: var(--action-secondary);
   padding: 1rem;
   border-radius: 6px;
@@ -461,27 +463,27 @@
   margin: 1.5rem 0;
 }
 
-.write-editor .ql-editor pre code {
+#react-quill .ql-editor pre code {
   background: none;
   padding: 0;
 }
 
-.write-editor .ql-editor ul,
-.write-editor .ql-editor ol {
+#react-quill .ql-editor ul,
+#react-quill .ql-editor ol {
   margin: 1.5rem 0;
   padding-left: 2rem;
 }
 
-.write-editor .ql-editor li {
+#react-quill .ql-editor li {
   margin-bottom: 0.5rem;
 }
 
-.write-editor .ql-editor a {
+#react-quill .ql-editor a {
   color: var(--accent);
   text-decoration: underline;
 }
 
-.write-editor .ql-editor a:hover {
+#react-quill .ql-editor a:hover {
   color: #2d5a7a;
 }
 
@@ -519,7 +521,7 @@
   outline: none !important;
 }
 
-.write-editor .ql-editor:focus {
+#react-quill .ql-editor:focus {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
@@ -840,19 +842,19 @@
     font-size: 2rem;
   }
   
-  .write-editor .ql-editor {
+  #react-quill .ql-editor {
     font-size: 1rem;
   }
   
-  .write-editor .ql-editor h1 {
+  #react-quill .ql-editor h1 {
     font-size: 1.75rem;
   }
   
-  .write-editor .ql-editor h2 {
+  #react-quill .ql-editor h2 {
     font-size: 1.5rem;
   }
   
-  .write-editor .ql-editor h3 {
+  #react-quill .ql-editor h3 {
     font-size: 1.25rem;
   }
 }
@@ -886,7 +888,7 @@
   #DARK THEME ADJUSTMENTS
 \*-----------------------------------*/
 
-.dark-theme .write-editor .ql-editor {
+.dark-theme #react-quill .ql-editor {
   color: var(--foreground-primary);
 }
 
@@ -920,7 +922,7 @@
   outline: none;
 }
 
-.write-editor .ql-editor:focus {
+#react-quill .ql-editor:focus {
   outline: none;
 }
 

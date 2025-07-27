@@ -1,10 +1,16 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo  } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
 import { MdArrowBack, MdImage, MdUpload, MdOutlineDrafts, MdFolder } from 'react-icons/md';
+import ReactQuill, { Quill } from "react-quill-new";
+import QuillTableBetter from "quill-table-better";
+import "react-quill-new/dist/quill.snow.css";
+import "quill-table-better/dist/quill-table-better.css";
 import './write.css';
+
+Quill.register({ "modules/table-better": QuillTableBetter }, true);
 
 export default function WritePage() {
   const [title, setTitle] = useState('');
@@ -21,46 +27,89 @@ export default function WritePage() {
   const fileInputRef = useRef(null);
   const tagInputRef = useRef(null);
 
-  useEffect(() => {
-    // Initialize Quill editor
-    if (typeof window !== 'undefined' && window.Quill && editorRef.current) {
-      const toolbarOptions = [
-        ['bold', 'italic', 'underline', 'strike'],
-        ['blockquote', 'code-block'],
-        [{ 'header': 1 }, { 'header': 2 }],
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'script': 'sub'}, { 'script': 'super' }],
-        [{ 'indent': '-1'}, { 'indent': '+1' }],
-        [{ 'direction': 'rtl' }],
-        [{ 'size': ['small', false, 'large', 'huge'] }],
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-        [{ 'color': [] }, { 'background': [] }],
-        [{ 'font': [] }],
-        [{ 'align': [] }],
-        ['clean'],
-        ['link', 'image']
-      ];
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [{ 'header': 1 }, { 'header': 2 }],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'script': 'sub'}, { 'script': 'super' }],
+          [{ 'indent': '-1'}, { 'indent': '+1' }],
+          [{ 'direction': 'rtl' }],
+          [{ 'size': ['small', false, 'large', 'huge'] }],
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'font': [] }],
+          [{ 'align': [] }],
+          ['clean'],
+          ['link', 'image'],
+          ["table-better"],
+        ],
+      },
+      table: false,
+      "table-better": {
+        language: "en_US",
+        // menus: [
+        //   "column",
+        //   "row",
+        //   "merge",
+        //   "table",
+        //   "cell",
+        //   "wrap",
+        //   "copy",
+        //   "delete",
+        // ],
+        toolbarTable: true,
+      },
+      keyboard: {
+        bindings: QuillTableBetter.keyboardBindings,
+      },
+    }),
+    []
+  );
 
-      quillRef.current = new window.Quill(editorRef.current, {
-        theme: 'snow',
-        modules: {
-          toolbar: toolbarOptions
-        },
-        placeholder: '✨ Write your post here...',
-        bounds: editorRef.current
-      });
+  // useEffect(() => {
+  //   // Initialize Quill editor
+  //   if (typeof window !== 'undefined' && window.Quill && editorRef.current) {
+  //     const toolbarOptions = [
+  //       ['bold', 'italic', 'underline', 'strike'],
+  //       ['blockquote', 'code-block'],
+  //       [{ 'header': 1 }, { 'header': 2 }],
+  //       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  //       [{ 'script': 'sub'}, { 'script': 'super' }],
+  //       [{ 'indent': '-1'}, { 'indent': '+1' }],
+  //       [{ 'direction': 'rtl' }],
+  //       [{ 'size': ['small', false, 'large', 'huge'] }],
+  //       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  //       [{ 'color': [] }, { 'background': [] }],
+  //       [{ 'font': [] }],
+  //       [{ 'align': [] }],
+  //       ['clean'],
+  //       ['link', 'image']
+  //     ];
 
-      // Handle content changes
-      quillRef.current.on('text-change', () => {
-        const content = quillRef.current.root.innerHTML;
-        setContent(content);
-        autoSave();
-      });
+  //     quillRef.current = new window.Quill(editorRef.current, {
+  //       theme: 'snow',
+  //       modules: {
+  //         toolbar: toolbarOptions
+  //       },
+  //       placeholder: '✨ Write your post here...',
+  //       bounds: editorRef.current
+  //     });
 
-      // Focus the editor
-      quillRef.current.focus();
-    }
-  }, []);
+  //     // Handle content changes
+  //     quillRef.current.on('text-change', () => {
+  //       const content = quillRef.current.root.innerHTML;
+  //       setContent(content);
+  //       autoSave();
+  //     });
+
+  //     // Focus the editor
+  //     quillRef.current.focus();
+  //   }
+  // }, []);
 
   const autoSave = async () => {
     if (title.trim() || content.trim()) {
@@ -123,13 +172,23 @@ export default function WritePage() {
 
   const handleCoverImageChange = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setCoverImage(e.target.result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.match('image.*')) {
+      toast.error('Please upload an image file');
+      return;
     }
+
+    // Validate file size (e.g., 5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image must be less than 5MB');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => setCoverImage(e.target.result);
+    reader.readAsDataURL(file);
   };
 
   const removeCoverImage = () => {
@@ -259,7 +318,8 @@ export default function WritePage() {
           </div>
 
           <div className="write-editor-section">
-            <div ref={editorRef} className="write-editor"></div>
+            {/* <div ref={editorRef} className="write-editor"></div> */}
+            <ReactQuill id="react-quill" ref={quillRef} placeholder="✨ Write your post here..." theme={"snow"} modules={modules} />
           </div>
         </div>
 
