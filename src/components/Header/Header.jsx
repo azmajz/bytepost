@@ -54,6 +54,9 @@ export default function Header() {
                 <NextLink href="/" className="nav-link">Home</NextLink>
               </li>
               <li>
+                <NextLink href="/write" className="nav-link">Write</NextLink>
+              </li>
+              <li>
                 <NextLink href="/search" className="nav-link">Search</NextLink>
               </li>
               <li>
@@ -80,6 +83,9 @@ export default function Header() {
               <ul>
                 <li>
                   <NextLink href="/" className="nav-link">Home</NextLink>
+                </li>
+                <li>
+                  <NextLink href="/write" className="nav-link">Write</NextLink>
                 </li>
                 <li>
                   <NextLink href="/register" className="nav-link">Register</NextLink>
