@@ -4,13 +4,8 @@ import { useState, useEffect, useRef, useMemo  } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
 import { MdArrowBack, MdImage, MdUpload, MdOutlineDrafts, MdFolder } from 'react-icons/md';
-import ReactQuill, { Quill } from "react-quill-new";
-import QuillTableBetter from "quill-table-better";
-import "react-quill-new/dist/quill.snow.css";
-import "quill-table-better/dist/quill-table-better.css";
+import {QuillEditor} from '@/components/QuillEditor/Editor';
 import './write.css';
-
-Quill.register({ "modules/table-better": QuillTableBetter }, true);
 
 export default function WritePage() {
   const [title, setTitle] = useState('');
@@ -27,48 +22,6 @@ export default function WritePage() {
   const fileInputRef = useRef(null);
   const tagInputRef = useRef(null);
 
-  const modules = useMemo(
-    () => ({
-      toolbar: {
-        container: [
-          ['bold', 'italic', 'underline', 'strike'],
-          ['blockquote', 'code-block'],
-          [{ 'header': 1 }, { 'header': 2 }],
-          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-          [{ 'script': 'sub'}, { 'script': 'super' }],
-          [{ 'indent': '-1'}, { 'indent': '+1' }],
-          [{ 'direction': 'rtl' }],
-          [{ 'size': ['small', false, 'large', 'huge'] }],
-          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-          [{ 'color': [] }, { 'background': [] }],
-          [{ 'font': [] }],
-          [{ 'align': [] }],
-          ['clean'],
-          ['link', 'image'],
-          ["table-better"],
-        ],
-      },
-      table: false,
-      "table-better": {
-        language: "en_US",
-        // menus: [
-        //   "column",
-        //   "row",
-        //   "merge",
-        //   "table",
-        //   "cell",
-        //   "wrap",
-        //   "copy",
-        //   "delete",
-        // ],
-        toolbarTable: true,
-      },
-      keyboard: {
-        bindings: QuillTableBetter.keyboardBindings,
-      },
-    }),
-    []
-  );
 
   // useEffect(() => {
   //   // Initialize Quill editor
@@ -317,10 +270,7 @@ export default function WritePage() {
             />
           </div>
 
-          <div className="write-editor-section">
-            {/* <div ref={editorRef} className="write-editor"></div> */}
-            <ReactQuill id="react-quill" ref={quillRef} placeholder="✨ Write your post here..." theme={"snow"} modules={modules} />
-          </div>
+          <QuillEditor quillRef={quillRef} value={content} onChange={setContent} />
         </div>
 
         <div className="write-sidebar">
