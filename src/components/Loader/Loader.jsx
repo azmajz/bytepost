@@ -3,7 +3,7 @@ import { useTheme } from '@/context/ThemeContext';
 import './Loader.css';
 
 const Loader = () => {
-  useTheme(); // still triggers re-render on theme change
+  useTheme(); // triggers re-render on theme change
   return (
     <div
       className="loader-overlay"

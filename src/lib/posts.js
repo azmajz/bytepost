@@ -409,4 +409,126 @@ export const saveDraft = async (postData, userId) => {
 
 export const publishPost = async (postData, userId) => {
   return createPost({ ...postData, published: true }, userId);
-}; 
+};
+
+export const getUserPosts = async (userId) => {
+  try {
+    console.log('userId', userId)
+    const { data: posts, error } = await supabase
+      .from('posts')
+      .select(`
+        *,
+        topic:topics (
+          id,
+          name,
+          slug
+        )
+      `)
+      .eq('author_id', userId)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching user posts:', error);
+      return [];
+    }
+
+    return posts || [];
+  } catch (error) {
+    console.error('Error in getUserPosts:', error);
+    return [];
+  }
+};
+
+export const getPublishedPostsByUser = async (userId) => {
+  try {
+    const { data: posts, error } = await supabase
+      .from('posts')
+      .select(`
+        *,
+        topic:topics (
+          id,
+          name,
+          slug
+        )
+      `)
+      .eq('author_id', userId)
+      .eq('published', true)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching published posts:', error);
+      return [];
+    }
+
+    return posts || [];
+  } catch (error) {
+    console.error('Error in getPublishedPostsByUser:', error);
+    return [];
+  }
+};
+
+export const getDraftPostsByUser = async (userId) => {
+  try {
+    const { data: posts, error } = await supabase
+      .from('posts')
+      .select(`
+        *,
+        topic:topics (
+          id,
+          name,
+          slug
+        )
+      `)
+      .eq('author_id', userId)
+      .eq('published', false)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching draft posts:', error);
+      return [];
+    }
+
+    return posts || [];
+  } catch (error) {
+    console.error('Error in getDraftPostsByUser:', error);
+    return [];
+  }
+};
+
+export const updatePost = async (postId, updates) => {
+  try {
+    const { data: post, error } = await supabase
+      .from('posts')
+      .update(updates)
+      .eq('id', postId)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return post;
+  } catch (error) {
+    console.error('Error updating post:', error);
+    throw error;
+  }
+};
+
+export const deletePost = async (postId) => {
+  try {
+    const { error } = await supabase
+      .from('posts')
+      .delete()
+      .eq('id', postId);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    throw error;
+  }
+};

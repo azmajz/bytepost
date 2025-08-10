@@ -6,8 +6,9 @@ import { FcGoogle } from 'react-icons/fc';
 import { VscEye, VscEyeClosed } from 'react-icons/vsc';
 import { supabase } from '@/lib/supabase';
 import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import '../auth.css';
-
 function EyeIcon({ open, onClick, label }) {
   return (
     <button
@@ -22,16 +23,18 @@ function EyeIcon({ open, onClick, label }) {
   );
 }
 
-function GoogleButton({ onClick }) {
+function GoogleButton({ onClick, loading }) {
   return (
-    <button type="button" className="google-btn" onClick={onClick}>
+    <button type="button" className="google-btn" onClick={onClick} disabled={loading}>
       <FcGoogle size={24} className="google-icon" />
-      Log in with Google
+      {loading ? 'Redirecting...' : 'Log in with Google'}
     </button>
   );
 }
 
 export default function LoginPage() {
+  const router = useRouter();
+  const { signInWithGoogle } = useAuth()
 
   const [form, setForm] = useState({
     email: '',
@@ -39,6 +42,7 @@ export default function LoginPage() {
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const validate = () => {
@@ -76,13 +80,20 @@ export default function LoginPage() {
       }
     } else {
       toast.success('Login successful!');
-      // Optionally redirect here
+      router.push('/');
     }
   };
 
-  const handleGoogleLogin = () => {
-    // TODO: Implement Google OAuth
-    toast.success('Google login coming soon!');
+  const handleGoogleLogin = async () => {
+    try {
+      setGoogleLoading(true);
+      await signInWithGoogle();
+      toast.success('Redirecting to Google...');
+    } catch (error) {
+      toast.error('Failed to sign in with Google');
+    } finally {
+      setGoogleLoading(false);
+    }
   };
 
   return (
@@ -105,7 +116,7 @@ export default function LoginPage() {
           <h1 className="register-title">Log in to your account</h1>
           <p className="register-subtitle">Welcome back to BytePost!</p>
 
-          <GoogleButton onClick={handleGoogleLogin} />
+          <GoogleButton onClick={handleGoogleLogin} loading={googleLoading} />
 
           <div className="register-divider">
             <span className="divider-line" />

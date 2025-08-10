@@ -71,7 +71,7 @@ export default function BlogDetail({ post }) {
     readTime: `${post.read_time || 5} min read`,
     views: post.view_count || 0,
     likes: post.like_count || 0,
-    date: new Date(post.created_at).toISOString(),
+    formattedDate: new Date(post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     topic: post.topic?.name || 'General',
     author: {
       name: post.author?.full_name || 'Anonymous',
@@ -123,7 +123,7 @@ export default function BlogDetail({ post }) {
                 <div className="meta-author-details">
                   <span className="meta-author-name">{transformedPost.author.name}</span>
                   <span className="meta-date">
-                    {new Date(transformedPost.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    {transformedPost.formattedDate}
                   </span>
                 </div>
                 <span className="topic-badge improved-topic-badge">{transformedPost.topic}</span>

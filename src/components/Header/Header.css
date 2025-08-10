@@ -206,4 +206,199 @@ header .btn-group {
   .theme-btn-desktop.dark::before { 
     left: calc(100% - 24px); 
   }
+}
+
+/*-----------------------------------*\
+  #USER MENU STYLES
+\*-----------------------------------*/
+
+.user-menu-item {
+  position: relative;
+}
+
+.user-menu {
+  position: relative;
+}
+
+.user-menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--background-secondary);
+  color: var(--foreground-secondary);
+  padding: 8px 16px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.user-menu-btn:hover {
+  background: var(--accent);
+  color: var(--white);
+}
+
+.user-menu-btn svg {
+  font-size: 18px;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--background-primary);
+  border: 1px solid var(--action-primary);
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 250px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  margin-top: 8px;
+}
+
+.user-menu:hover .user-dropdown,
+.user-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--action-primary);
+  margin-bottom: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--background-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-avatar svg {
+  font-size: 20px;
+  color: var(--foreground-tertiary);
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  font-weight: 600;
+  color: var(--foreground-primary);
+  margin: 0;
+  font-size: 14px;
+}
+
+.user-email {
+  color: var(--foreground-tertiary);
+  margin: 0;
+  font-size: 12px;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: var(--foreground-secondary);
+  padding: 8px 0;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: color 0.3s ease;
+}
+
+.logout-btn:hover {
+  color: var(--accent);
+}
+
+.logout-btn svg {
+  font-size: 16px;
+}
+
+/* Mobile User Info Styles */
+.mobile-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--action-primary);
+  margin-bottom: 12px;
+}
+
+.logout-btn-mobile {
+  background: none;
+  border: none;
+  color: var(--foreground-secondary);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: color 0.3s ease;
+}
+
+.logout-btn-mobile:hover {
+  color: var(--accent);
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 1023px) {
+  .user-menu-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  
+  .user-menu-btn svg {
+    font-size: 16px;
+  }
+  
+  .user-dropdown {
+    min-width: 200px;
+    right: -10px;
+  }
+  
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .user-name {
+    font-size: 13px;
+  }
+  
+  .user-email {
+    font-size: 11px;
+  }
+  
+  .user-name-text {
+    display: none;
+  }
+}
+
+/* Hide user menu on very small screens */
+@media (max-width: 480px) {
+  .user-menu-item {
+    display: none;
+  }
 } 

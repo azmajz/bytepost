@@ -64,6 +64,18 @@
    * spacing 
    */
   --py: 5rem;
+
+  /**
+   * Additional variables for components
+   */
+  --primary-color: #3d71a0;
+  --primary-color-dark: #2d5a7a;
+  --text-color: var(--foreground-primary);
+  --text-muted: var(--foreground-secondary);
+  --border-color: var(--action-primary);
+  --card-bg: var(--background-primary);
+  --card-header-bg: var(--background-secondary);
+  --placeholder-bg: var(--action-secondary);
 }
 
 /*-----------------------------------*\ 

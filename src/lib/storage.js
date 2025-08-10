@@ -1,6 +1,6 @@
+import { BUCKET_NAME } from '@/config/app';
 import { supabase } from './supabase';
 
-const BUCKET_NAME = 'bytepost';
 export const bucketFolders = {
   POSTS: 'posts'
 }

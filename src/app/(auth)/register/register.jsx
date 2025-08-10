@@ -6,6 +6,9 @@ import { FcGoogle } from 'react-icons/fc';
 import { VscEye, VscEyeClosed } from 'react-icons/vsc';
 import { supabase } from '@/lib/supabase';
 import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import Loader from '@/components/Loader/Loader';
+import { useAuth } from '@/context/AuthContext';
 
 function EyeIcon({ open, onClick, label }) {
   return (
@@ -21,32 +24,35 @@ function EyeIcon({ open, onClick, label }) {
   );
 }
 
-function GoogleButton({ onClick }) {
+function GoogleButton({ onClick, loading }) {
   return (
-    <button type="button" className="google-btn" onClick={onClick}>
+    <button type="button" className="google-btn" onClick={onClick} disabled={loading}>
       <FcGoogle size={24} className="google-icon" />
-      Register with Google
+      {loading ? 'Redirecting...' : 'Register with Google'}
     </button>
   );
 }
 
 export default function RegisterPage() {
 
+  const router = useRouter();
+  const { signInWithGoogle } = useAuth();
   const [form, setForm] = useState({
-    name: '',
+    fullName: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
 
   const validate = () => {
     const newErrors = {};
-    if (!form.name.trim()) newErrors.name = 'Full name is required.';
+    if (!form.fullName.trim()) newErrors.fullName = 'Full name is required.';
     if (!form.email.trim()) newErrors.email = 'Email is required.';
     else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email)) newErrors.email = 'Invalid email address.';
     if (!form.password) newErrors.password = 'Password is required.';
@@ -59,7 +65,6 @@ export default function RegisterPage() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: undefined });
-
   };
 
   const handleSubmit = async (e) => {
@@ -70,31 +75,41 @@ export default function RegisterPage() {
       return;
     }
     setLoading(true);
-    const { name, email, password } = form;
+    const { fullName, email, password } = form;
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: { name },
+        data: { name: fullName, _full_name: fullName },
       },
     });
     setLoading(false);
     if (error) {
       toast.error(error.message);
     } else {
-
+      setForm({ fullName: '', email: '', password: '', confirmPassword: '' });
+      router.push('/login');
       toast.success('Registration successful! Please check your email to confirm your account.');
-      setForm({ name: '', email: '', password: '', confirmPassword: '' });
     }
   };
 
-  const handleGoogleRegister = () => {
-    // TODO: Implement Google OAuth
-    toast.success('Google registration coming soon!');
+  const handleGoogleRegister = async () => {
+    try {
+      setGoogleLoading(true);
+      await signInWithGoogle();
+      toast.success('Redirecting to Google...');
+    } catch (error) {
+      console.log('error', error)
+      toast.error('Failed to sign in with Google');
+    } finally {
+      setGoogleLoading(false);
+    }
   };
 
   return (
     <main className="register-page">
+      {loading && <Loader />}
+
       <div className="register-container">
         <div className="register-card">
           <Link href="/" className="register-logo-link" aria-label="Go to homepage">
@@ -113,7 +128,7 @@ export default function RegisterPage() {
           <h1 className="register-title">Create your account</h1>
           <p className="register-subtitle">Join our community and start sharing your knowledge.</p>
 
-          <GoogleButton onClick={handleGoogleRegister} />
+          <GoogleButton onClick={handleGoogleRegister} loading={googleLoading} />
 
           <div className="register-divider">
             <span className="divider-line" />
@@ -123,18 +138,18 @@ export default function RegisterPage() {
           
           <form className="register-form" onSubmit={handleSubmit} autoComplete="off">
             <div className="form-group">
-              <label htmlFor="name">Full Name</label>
+              <label htmlFor="fullName">Full Name</label>
               <input
                 type="text"
-                id="name"
-                name="name"
-                value={form.name}
+                id="fullName"
+                name="fullName"
+                value={form.fullName}
                 onChange={handleChange}
-                className={errors.name ? 'error' : ''}
+                className={errors.fullName ? 'error' : ''}
                 placeholder="Your full name"
                 autoFocus
               />
-              {errors.name && <span className="form-error">{errors.name}</span>}
+              {errors.fullName && <span className="form-error">{errors.fullName}</span>}
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
@@ -145,7 +160,7 @@ export default function RegisterPage() {
                 value={form.email}
                 onChange={handleChange}
                 className={errors.email ? 'error' : ''}
-                placeholder="you@email.com"
+                placeholder="username@email.com"
               />
               {errors.email && <span className="form-error">{errors.email}</span>}
             </div>
