@@ -2,6 +2,15 @@
   #WRITE PAGE STYLES
 \*-----------------------------------*/
 
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  font-size: 1.1rem;
+  color: var(--foreground-secondary);
+}
+
 /* Global Quill border overrides */
 .ql-editor {
   border: none !important;
@@ -20,6 +29,10 @@
   outline: none !important;
   box-shadow: none !important;
 } */
+
+.ql-toolbar {
+	border-radius: 8px;
+}
 
 .write-page {
   background: var(--background-primary);

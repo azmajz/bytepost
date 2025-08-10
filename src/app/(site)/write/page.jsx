@@ -2,67 +2,48 @@
 
 import { useState, useEffect, useRef, useMemo  } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import { MdArrowBack, MdImage, MdUpload, MdOutlineDrafts, MdFolder } from 'react-icons/md';
 import {QuillEditor} from '@/components/QuillEditor/Editor';
+import { useAuth } from '@/context/AuthContext';
+import { publishPost, saveDraft, getAllTopics } from '@/lib/posts';
 import './write.css';
 
 export default function WritePage() {
+  const { user, isAuthenticated, loading } = useAuth();
+  const router = useRouter();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [coverImage, setCoverImage] = useState('');
+  const [coverImagePreview, setCoverImagePreview] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('');
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState('');
   const [isPublishing, setIsPublishing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState(null);
+  const [topics, setTopics] = useState([]);
   const editorRef = useRef(null);
   const quillRef = useRef(null);
   const fileInputRef = useRef(null);
   const tagInputRef = useRef(null);
 
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login');
+    }
+    const fetchData = async () => {
+      const topicsData = await getAllTopics();
+      setTopics(topicsData);
+    };
+    
+    fetchData();
+  }, []);
 
-  // useEffect(() => {
-  //   // Initialize Quill editor
-  //   if (typeof window !== 'undefined' && window.Quill && editorRef.current) {
-  //     const toolbarOptions = [
-  //       ['bold', 'italic', 'underline', 'strike'],
-  //       ['blockquote', 'code-block'],
-  //       [{ 'header': 1 }, { 'header': 2 }],
-  //       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  //       [{ 'script': 'sub'}, { 'script': 'super' }],
-  //       [{ 'indent': '-1'}, { 'indent': '+1' }],
-  //       [{ 'direction': 'rtl' }],
-  //       [{ 'size': ['small', false, 'large', 'huge'] }],
-  //       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-  //       [{ 'color': [] }, { 'background': [] }],
-  //       [{ 'font': [] }],
-  //       [{ 'align': [] }],
-  //       ['clean'],
-  //       ['link', 'image']
-  //     ];
-
-  //     quillRef.current = new window.Quill(editorRef.current, {
-  //       theme: 'snow',
-  //       modules: {
-  //         toolbar: toolbarOptions
-  //       },
-  //       placeholder: '✨ Write your post here...',
-  //       bounds: editorRef.current
-  //     });
-
-  //     // Handle content changes
-  //     quillRef.current.on('text-change', () => {
-  //       const content = quillRef.current.root.innerHTML;
-  //       setContent(content);
-  //       autoSave();
-  //     });
-
-  //     // Focus the editor
-  //     quillRef.current.focus();
-  //   }
-  // }, []);
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const autoSave = async () => {
     if (title.trim() || content.trim()) {
@@ -80,6 +61,12 @@ export default function WritePage() {
   };
 
   const handlePublish = async () => {
+    if (!isAuthenticated) {
+      toast.error('Please log in to publish a post');
+      router.push('/login');
+      return;
+    }
+
     if (!title.trim()) {
       toast.error('Please enter a title for your post');
       return;
@@ -92,38 +79,78 @@ export default function WritePage() {
 
     setIsPublishing(true);
     try {
-      // Simulate publishing
-      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // // Get the content from the editor
+      // const editor = document.querySelector(`#${editorId} > .ql-editor`)
+      // const content = editor.innerHTML || ''
+      // if (!content) {
+      //   console.error('No content from editor');
+      //   return;
+      // }
+      const postData = {
+        title: title.trim(),
+        content: content.trim(),
+        coverImage: fileInputRef.current.files[0] || null,
+        selectedTopic,
+        tags
+      };
+
+      const publishedPost = await publishPost(postData, user.id);
+      
       toast.success('Post published successfully!');
+      
       // Reset form
       setTitle('');
       setContent('');
-      if (quillRef.current) {
-        quillRef.current.setText('');
-      }
+      setCoverImagePreview('');
+      setSelectedTopic('');
+      setTags([]);
       setLastSaved(null);
+      
+      // Redirect to the published post
+      router.push(`/post/${publishedPost.slug}`);
     } catch (error) {
-      toast.error('Failed to publish post');
+      console.error('Publishing error:', error);
+      toast.error(error.message || 'Failed to publish post');
     } finally {
       setIsPublishing(false);
     }
   };
 
   const handleSaveDraft = async () => {
+    if (!isAuthenticated) {
+      toast.error('Please log in to save a draft');
+      router.push('/login');
+      return;
+    }
+
+    if (!title.trim() && !content.trim()) {
+      toast.error('Please add some content to save as draft');
+      return;
+    }
+
     setIsSaving(true);
     try {
-      // Simulate saving draft
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const postData = {
+        title: title.trim() || 'Untitled Draft',
+        content: content.trim() || '',
+        coverImagePreview,
+        selectedTopic,
+        tags
+      };
+
+      await saveDraft(postData, user.id);
       toast.success('Draft saved successfully!');
       setLastSaved(new Date());
     } catch (error) {
-      toast.error('Failed to save draft');
+      console.error('Saving draft error:', error);
+      toast.error(error.message || 'Failed to save draft');
     } finally {
       setIsSaving(false);
     }
   };
 
-  const handleCoverImageChange = (event) => {
+  const handleCoverImagePreviewChange = (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
@@ -140,12 +167,12 @@ export default function WritePage() {
     }
 
     const reader = new FileReader();
-    reader.onload = (e) => setCoverImage(e.target.result);
+    reader.onload = (e) => setCoverImagePreview(e.target.result);
     reader.readAsDataURL(file);
   };
 
-  const removeCoverImage = () => {
-    setCoverImage('');
+  const removeCoverImagePreview = () => {
+    setCoverImagePreview('');
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -170,18 +197,20 @@ export default function WritePage() {
     }
   };
 
-  const topics = [
-    'Technology',
-    'Programming',
-    'Web Development',
-    'Design',
-    'Business',
-    'Productivity',
-    'Tutorial',
-    'Opinion',
-    'News',
-    'Review'
-  ];
+  // Show loading state while checking authentication
+  if (loading) {
+    return (
+      <div className="write-page">
+        <div className="write-container">
+          <div className="write-content">
+            <div className="loading-state">
+              <p>Loading...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="write-page">
@@ -240,10 +269,10 @@ export default function WritePage() {
           </div>
 
           <div className="write-cover-section">
-            {coverImage ? (
+            {coverImagePreview ? (
               <div className="cover-image-container">
-                <img src={coverImage} alt="Cover" className="cover-image" />
-                <button className="remove-cover-btn" onClick={removeCoverImage}>
+                <img src={coverImagePreview} alt="Cover" className="cover-image" />
+                <button className="remove-cover-btn" onClick={removeCoverImagePreview}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -264,7 +293,7 @@ export default function WritePage() {
               ref={fileInputRef}
               type="file"
               accept="image/*"
-              onChange={handleCoverImageChange}
+              onChange={handleCoverImagePreviewChange}
               className="cover-file-input"
               style={{ display: 'none' }}
             />
@@ -282,9 +311,11 @@ export default function WritePage() {
                 onChange={(e) => setSelectedTopic(e.target.value)}
                 className="topic-select"
               >
-                <option value="">Select a topic</option>
+              <option value="">Select a topic</option>
                 {topics.map(topic => (
-                  <option key={topic} value={topic}>{topic}</option>
+                  <option key={topic.id} value={topic.name}>
+                    {topic.name}
+                  </option>
                 ))}
               </select>
             </div>

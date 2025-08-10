@@ -1,5 +1,6 @@
 import '@/app/globals.css'
 import { ThemeProvider } from '@/context/ThemeContext';
+import { AuthProvider } from '@/context/AuthContext';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import { Toaster } from 'react-hot-toast';
@@ -34,16 +35,18 @@ export default function RootLayout({ children }) {
       </head>
       <body className="light-theme">
         <ThemeProvider>
-          <Header />
-          <Toaster
-            position="top-right"
-            toastOptions={toastOptions}
-            theme={typeof window !== 'undefined' && document.body.classList.contains('dark-theme') ? 'dark' : 'light'}
-          />
-          <main className='layout-main'>
-            {children}
-          </main>
-          <Footer />
+          <AuthProvider>
+            <Header />
+            <Toaster
+              position="top-right"
+              toastOptions={toastOptions}
+              theme={typeof window !== 'undefined' && document.body.classList.contains('dark-theme') ? 'dark' : 'light'}
+            />
+            <main className='layout-main'>
+              {children}
+            </main>
+            <Footer />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
